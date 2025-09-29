@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: reactive-store-api
+  r2dbc:
+    url: r2dbc:h2:mem:///storedb;DB_CLOSE_DELAY=-1;MODE=LEGACY
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+  web:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+logging:
+  level:
+    org.springframework.r2dbc: INFO
+    org.springframework.data.r2dbc: INFO
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
