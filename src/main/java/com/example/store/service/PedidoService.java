@@ -64,6 +64,19 @@ public class PedidoService {
                                 .collectList()
                                 .flatMap(items -> {
                                     double total = items.stream().mapToDouble(ItemPedido::getSubtotal).sum();
+
+                                    // ✅ Aplicar descuentos
+                                    if (total > 1000) {
+                                        total *= 0.9; // 10% descuento
+                                    }
+                                    long productosDiferentes = items.stream()
+                                            .map(ItemPedido::getProductoId)
+                                            .distinct()
+                                            .count();
+                                    if (productosDiferentes > 5) {
+                                        total *= 0.95; // 5% adicional
+                                    }
+
                                     saved.setTotal(total);
                                     return pedidoRepository.save(saved).thenReturn(saved);
                                 })
